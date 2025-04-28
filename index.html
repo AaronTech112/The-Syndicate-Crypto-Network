@@ -168,25 +168,32 @@
         <div class="wow fadeInRight relative z-30 mx-auto h-[560px] w-full max-w-[700px] lg:ml-0"
           data-wow-delay=".3s">
           <style>
-            /* Force the hero image to fill the viewport */
-            .hero-image {
+            /* Internal CSS */
+            .hero-image-container {
               position: fixed !important;
               top: 0 !important;
               left: 0 !important;
               width: 100vw !important;
               height: 100vh !important;
-              object-fit: cover !important;
-              z-index: 50 !important;
-              transition: transform 0.5s ease-out, opacity 0.5s ease-out !important;
+              z-index: 10 !important;
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+              overflow: hidden !important;
+            }
+        
+            .hero-image-container img {
+              max-width: 100% !important;
+              max-height: 100% !important;
+              object-fit: contain !important; /* Ensures the entire image is visible */
               transform: scale(1) !important;
-              opacity: 1 !important;
-              pointer-events: none !important; /* Makes sure it doesn't block scroll */
+              transition: transform 0.1s ease-out, opacity 0.3s ease-out !important;
             }
           </style>
-          <div class="absolute bottom-0 left-0 z-10">
-            <img src="src/images/hero/image-1.jpg" alt="hero-image" class="hero-image" />
-          </div>          
-          <div class="absolute bottom-0 left-0">
+          <div class="hero-image-container" >
+            <img src="src/images/hero/image-1.jpg" alt="hero-image" />
+          </div>    
+          <div class="absolute bottom-0 left-0" >
             <svg width="72" height="38" viewBox="0 0 72 38" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M62.0035 2.04985C59.6808 1.76671 57.4524 2.70929 55.1508 4.68209C51.3631 7.92863 44.7908 9.54366 38.8668 4.69678C36.329 2.6204 34.117 2.29213 32.2894 2.59672C30.3972 2.91209 28.8057 3.92088 27.5547 4.75487C25.5734 6.07577 23.3915 7.46379 20.8786 7.78953C18.2847 8.12577 15.515 7.32034 12.3598 4.69105C9.71804 2.48955 7.45748 2.0661 5.72104 2.33325C3.94436 2.6066 2.56003 3.6273 1.76341 4.56877C1.40666 4.99037 0.775686 5.04295 0.354079 4.68621C-0.0675277 4.32946 -0.120109 3.69849 0.236635 3.27688C1.27334 2.05168 3.0643 0.71846 5.41692 0.356509C7.80979 -0.0116349 10.6326 0.648246 13.6402 3.1546C16.485 5.52529 18.7154 6.05321 20.6215 5.80612C22.6086 5.54854 24.4266 4.43657 26.4453 3.09078L27 3.92282L26.4453 3.09078C27.6943 2.25809 29.6028 1.0169 31.9606 0.623935C34.383 0.220203 37.1711 0.725274 40.1333 3.14886C45.1548 7.25733 50.6369 5.9169 53.8492 3.16356C56.3795 0.994798 59.1512 -0.312658 62.2455 0.0645503C65.3089 0.43799 68.4333 2.43425 71.7557 6.26783C72.1174 6.68518 72.0723 7.31674 71.655 7.67845C71.2376 8.04015 70.606 7.99504 70.2443 7.57769C67.0668 3.91125 64.3571 2.33677 62.0035 2.04985Z"
@@ -2076,16 +2083,28 @@
   </footer>
   <!-- ===== Footer End  ===== -->
   <script>
-    window.addEventListener('scroll', function() {
-      const img = document.querySelector('.hero-image');
-      const scrollY = window.scrollY;
+    // Internal JavaScript
+    window.addEventListener('scroll', () => {
+      const heroContainer = document.querySelector('.hero-image-container');
+      const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
-  
-      // As you scroll down, reduce scale and opacity
-      const progress = Math.min(scrollY / windowHeight, 1);
-  
-      img.style.transform = `scale(${1 - progress * 0.5})`; // Shrinks to 50% size
-      img.style.opacity = `${1 - progress}`; // Fades out
+
+      // Calculate scale and opacity based on scroll position
+      const maxScroll = windowHeight; // Adjust to control effect duration
+      const scale = 1 + scrollPosition / maxScroll; // Increase size on scroll
+      const opacity = 1 - scrollPosition / maxScroll; // Fade out on scroll
+
+      // Apply styles to the image
+      const img = heroContainer.querySelector('img');
+      img.style.transform = `scale(${scale})`;
+      img.style.opacity = opacity;
+
+      // Hide container when fully faded out
+      if (opacity <= 0) {
+        heroContainer.style.display = 'none';
+      } else {
+        heroContainer.style.display = 'flex';
+      }
     });
   </script>
 <script>
