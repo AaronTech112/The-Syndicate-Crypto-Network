@@ -1033,7 +1033,7 @@
     <!-- Section Title -->
     <div class="wow fadeInUp relative mx-auto mb-16 max-w-[620px] text-center" data-wow-delay=".2s">
       <h2 class="font-heading text-dark mb-5 text-[38px] leading-tight font-semibold dark:text-white">
-        Trusted by Leading Crypto Platforms
+        Our Trusted Partners
       </h2>
       <p class="text-dark-text text-base">
         The Syndicate Crypto Network partners with top-tier platforms and networks to elevate your project’s visibility and credibility across global markets.
@@ -1042,29 +1042,179 @@
     <div class="border-b pb-24 dark:border-[#2E333D]">
       <div class="wow fadeInUp -mx-4 flex flex-wrap" data-wow-delay=".2s">
         <div class="w-full px-4">
-          <div class="flex flex-wrap items-center justify-center">
-            <a href="https://www.coingecko.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/MEXC-LOGO.png" alt="coingecko-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://coinmarketcap.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/kucoin.png" alt="coinmarketcap-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://www.binance.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/Bybit-colored-logo-4066014164.png" alt="binance-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://www.wechat.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/MEXC-LOGO.png" alt="wechat-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://www.weibo.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/binance-logo-2-768x155-3987171316.png" alt="weibo-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://www.weibo.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/coinmarketcap-logo-freelogovectors.net_.png" alt="weibo-logo" class="h-10 w-full" />
-            </a>
-            <a href="https://www.weibo.com" class="mx-4 flex w-[150px] items-center justify-center py-5 2xl:w-[180px]">
-              <img src="src/images/brands/avedex_mobile_logo.654ecc49-3058418946.png" alt="weibo-logo" class="h-10 w-full" />
-            </a>
+          <!-- Internal CSS -->
+          <style>
+            .carousel-container {
+              position: relative !important;
+              max-width: 100% !important;
+              margin: 0 auto !important;
+              overflow: hidden !important;
+            }
+    
+            .carousel-track {
+              display: flex !important;
+              transition: transform 0.5s ease-in-out !important;
+            }
+    
+            .carousel-item {
+              flex: 0 0 200px !important; /* Fixed width for each item */
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              justify-content: center !important;
+              padding: 20px !important;
+              box-sizing: border-box !important;
+            }
+    
+            .carousel-item img {
+              max-width: 150px !important;
+              max-height: 50px !important;
+              object-fit: contain !important;
+            }
+    
+            .carousel-item span {
+              margin-top: 10px !important;
+              font-size: 16px !important;
+              font-weight: 500 !important;
+              color: white !important; /* Adjust for dark mode if needed */
+              text-align: center !important;
+            }
+    
+            .carousel-nav {
+              position: absolute !important;
+              top: 50% !important;
+              transform: translateY(-50%) !important;
+              background: rgba(0, 0, 0, 0.5) !important;
+              color: white !important;
+              border: none !important;
+              padding: 10px !important;
+              cursor: pointer !important;
+              z-index: 10 !important;
+            }
+    
+            .carousel-prev {
+              left: 10px !important;
+            }
+    
+            .carousel-next {
+              right: 10px !important;
+            }
+    
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+              .carousel-item {
+                flex: 0 0 150px !important;
+              }
+              .carousel-item img {
+                max-width: 100px !important;
+              }
+            }
+          </style>
+    
+          <!-- Carousel HTML -->
+          <div class="carousel-container">
+            <div class="carousel-track">
+              <div class="carousel-item">
+                <a href="https://www.coingecko.com">
+                  <img src="src/images/brands/MEXC-LOGO.png" alt="coingecko-logo" />
+                  <span>CoinGecko</span>
+                </a>
+              </div>
+              <div class="carousel-item">
+                <a href="https://coinmarketcap.com">
+                  <img src="src/images/brands/kucoin.png" alt="coinmarketcap-logo" />
+                  <span>KuCoin</span>
+                </a>
+              </div>
+              <div class="carousel-item">
+                <a href="https://www.wechat.com">
+                  <img src="src/images/brands/MEXC-LOGO.png" alt="wechat-logo" />
+                  <span>WeChat</span>
+                </a>
+              </div>
+              <div class="carousel-item">
+                <a href="https://www.weibo.com">
+                  <img src="src/images/brands/binance-logo-2-768x155-3987171316.png" alt="weibo-logo" />
+                  <span>Binance</span>
+                </a>
+              </div>
+              <div class="carousel-item">
+                <a href="https://www.weibo.com">
+                  <img src="src/images/brands/coinmarketcap-logo-freelogovectors.net_.png" alt="weibo-logo" />
+                  <span>CoinMarketCap</span>
+                </a>
+              </div>
+              <div class="carousel-item">
+                <a href="https://www.weibo.com">
+                  <img src="src/images/brands/avedex_mobile_logo.654ecc49-3058418946.png" alt="weibo-logo" />
+                  <span>AveDex</span>
+                </a>
+              </div>
+            </div>
+            <button class="carousel-nav carousel-prev">&#10094;</button>
+            <button class="carousel-nav carousel-next">&#10095;</button>
           </div>
+    
+          <!-- Internal JavaScript -->
+          <script>
+            const track = document.querySelector('.carousel-track');
+            const items = document.querySelectorAll('.carousel-item');
+            const prevButton = document.querySelector('.carousel-prev');
+            const nextButton = document.querySelector('.carousel-next');
+            let currentIndex = 0;
+            const itemWidth = items[0].getBoundingClientRect().width;
+            const totalItems = items.length;
+            let visibleItems = Math.floor(window.innerWidth / itemWidth);
+    
+            // Adjust visible items on resize
+            window.addEventListener('resize', () => {
+              visibleItems = Math.floor(window.innerWidth / itemWidth);
+              updateCarousel();
+            });
+    
+            // Auto-slide every 3 seconds
+            let autoSlide = setInterval(() => {
+              currentIndex = (currentIndex + 1) % totalItems;
+              updateCarousel();
+            }, 3000);
+    
+            // Stop auto-slide on hover
+            document.querySelector('.carousel-container').addEventListener('mouseenter', () => {
+              clearInterval(autoSlide);
+            });
+    
+            // Resume auto-slide on mouse leave
+            document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
+              autoSlide = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+              }, 3000);
+            });
+    
+            // Previous button
+            prevButton.addEventListener('click', () => {
+              currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+              updateCarousel();
+            });
+    
+            // Next button
+            nextButton.addEventListener('click', () => {
+              currentIndex = (currentIndex + 1) % totalItems;
+              updateCarousel();
+            });
+    
+            // Update carousel position
+            function updateCarousel() {
+              track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    
+              // Show/hide navigation buttons
+              prevButton.style.display = currentIndex === 0 ? 'none' : 'block';
+              nextButton.style.display = currentIndex >= totalItems - visibleItems ? 'none' : 'block';
+            }
+    
+            // Initial update
+            updateCarousel();
+          </script>
         </div>
       </div>
     </div>
