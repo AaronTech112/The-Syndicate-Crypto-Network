@@ -185,9 +185,10 @@
             .hero-image-container img {
               max-width: 100% !important;
               max-height: 100% !important;
-              object-fit: contain !important; /* Ensures the entire image is visible */
-              transform: scale(1) !important;
-              transition: transform 0.1s ease-out, opacity 0.3s ease-out !important;
+              object-fit: contain !important; /* Ensures entire image is visible */
+              transform: scale(1) !important; /* Initial scale */
+              transition: transform 0.3s ease-out, opacity 0.3s ease-out !important; /* Smooth transitions */
+              will-change: transform, opacity !important; /* Optimize performance */
             }
           </style>
           <div class="hero-image-container" >
@@ -2088,8 +2089,8 @@
       const windowHeight = window.innerHeight;
 
       // Calculate scale and opacity based on scroll position
-      const maxScroll = windowHeight; // Adjust to control effect duration
-      const scale = 1 + scrollPosition / maxScroll; // Increase size on scroll
+      const maxScroll = windowHeight; // Controls when effect completes
+      const scale = 1 + (scrollPosition / maxScroll) * 1.5; // Amplify scaling effect
       const opacity = 1 - scrollPosition / maxScroll; // Fade out on scroll
 
       // Apply styles to the image
