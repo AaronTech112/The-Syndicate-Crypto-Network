@@ -763,6 +763,12 @@
     scroll-snap-align: start;
   }
 
+  .team-carousel {
+  padding-inline: 1rem;
+  scroll-padding-inline: 1rem;
+}
+
+
   @media (min-width: 768px) {
     .team-carousel-wrapper {
       overflow: visible;
@@ -774,8 +780,11 @@
     }
 
     .team-carousel > div {
-      flex: 0 0 auto;
-    }
+  flex: 0 0 auto;
+  width: calc(100% - 2rem); /* 2rem accounts for the gap */
+  max-width: 100%;
+   }
+
   }
 </style>
 
@@ -1109,6 +1118,16 @@
       <button class="team-carousel-nav team-carousel-prev">❮</button>
       <button class="team-carousel-nav team-carousel-next">❯</button>
     </div>
+    <script>
+      const carousel = document.querySelector('.team-carousel');
+      carousel.addEventListener('scroll', () => {
+        const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+        if (carousel.scrollLeft > maxScrollLeft) {
+          carousel.scrollLeft = maxScrollLeft;
+        }
+      });
+    </script>
+    
 
     <!-- Internal JavaScript -->
     <script>
