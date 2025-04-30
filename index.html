@@ -197,7 +197,7 @@
                 top: 0 !important;
                 left: 0 !important;
                 width: 100vw !important;
-                height: 100vh !important;
+  
                 z-index: 10 !important;
                 display: flex !important;
                 justify-content: center !important;
@@ -205,9 +205,9 @@
                 overflow: hidden !important;
               }
               .hero-image-container {
-                overflow: hidden;
-                height: 100vh; /* Or your desired height */
-              }
+                  overflow: hidden;
+                  height: 100vh; /* Or your desired height */
+                }
 
               .hero-image-container img {
                 max-width: 100% !important;
@@ -1667,12 +1667,7 @@
                   <div class="order-last w-full px-4 lg:order-first lg:w-1/2">
                     <div class="text-center lg:text-left">
                       <p class="font-heading text-dark-text mb-1 text-base font-light lg:text-lg xl:text-2xl">
-                        "Working with Crypto Syndicate Network has been a game-changer for us. They totally understand
-                        the crypto space and know how to get the word out about your project. Their marketing strategies
-                        are on point, and their community building skills are insane. We've seen a huge spike in
-                        interest and engagement since teaming up with them. The team's super responsive and genuinely
-                        cares about what they're doing. If you're looking to level up your crypto project, I’d
-                        definitely give them a shout."
+                        Syndicate crypto Network has been a lifesaver! Their expertise and energy paid off big time. We've seen huge visibility and traction gains. Super easy to work with too. Highly recommend them for taking your crypto project to the next level!"
                       </p>
                       <h3 class="font-heading text-dark mb-1 text-xl dark:text-white">
                         $michi Dev comments
@@ -2138,23 +2133,19 @@
   </footer>
   <!-- ===== Footer End  ===== -->
   <script>
-    // Internal JavaScript
     window.addEventListener('scroll', () => {
       const heroContainer = document.querySelector('.hero-image-container');
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Calculate scale and opacity based on scroll position
-      const maxScroll = windowHeight; // Controls when effect completes
-      const scale = 1 + (scrollPosition / maxScroll) * 1.5; // Amplify scaling effect
-      const opacity = 1 - scrollPosition / maxScroll; // Fade out on scroll
+      const maxScroll = windowHeight;
+      const scale = 1 + (scrollPosition / maxScroll) * 1.5;
+      const opacity = 1 - scrollPosition / maxScroll;
 
-      // Apply styles to the image
       const img = heroContainer.querySelector('img');
       img.style.transform = `scale(${scale})`;
       img.style.opacity = opacity;
 
-      // Hide container when fully faded out
       if (opacity <= 0) {
         heroContainer.style.display = 'none';
       } else {
