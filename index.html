@@ -1106,18 +1106,6 @@
           margin: 0 auto;
           overflow: hidden;
         }
-        .team-carousel-wrapper {
-            touch-action: pan-y; /* allow vertical page scroll, but capture horizontal pans */
-          }
-          .team-carousel {
-            cursor: grab;
-            /* optional styling while dragging: */
-          }
-          .team-carousel.dragging {
-            cursor: grabbing;
-            user-select: none;
-          }
-
 
         .team-carousel {
           display: flex;
@@ -1197,57 +1185,49 @@
       <!-- JavaScript -->
       <script>
         const carousel = document.querySelector('.team-carousel');
-        let isDown = false;
-        let startX, scrollLeft;
-      
-        // MOUSE EVENTS (you already have these)
-        carousel.addEventListener('mousedown', (e) => {
-          isDown = true;
-          carousel.classList.add('dragging');
-          startX = e.pageX - carousel.offsetLeft;
-          scrollLeft = carousel.scrollLeft;
+        const items = document.querySelectorAll('.team-carousel-item');
+        const prevButton = document.querySelector('.team-carousel-prev');
+        const nextButton = document.querySelector('.team-carousel-next');
+        let currentTranslateX = 0;
+
+        const item = items[0];
+        const itemWidth = item.getBoundingClientRect().width;
+        const marginRight = parseFloat(getComputedStyle(item).marginRight);
+        const translateStep = itemWidth + marginRight;
+        const wrapper = document.querySelector('.team-carousel-wrapper');
+        const wrapperWidth = wrapper.clientWidth;
+        const carouselWidth = carousel.scrollWidth;
+        const maxTranslateX = carouselWidth - wrapperWidth;
+
+        function updateCarousel() {
+          carousel.style.transform = `translateX(-${currentTranslateX}px)`;
+          prevButton.style.display = currentTranslateX > 0 ? 'block' : 'none';
+          nextButton.style.display = currentTranslateX < maxTranslateX ? 'block' : 'none';
+        }
+
+        nextButton.addEventListener('click', () => {
+          if (currentTranslateX < maxTranslateX) {
+            currentTranslateX += translateStep;
+            if (currentTranslateX > maxTranslateX) {
+              currentTranslateX = maxTranslateX;
+            }
+            updateCarousel();
+          }
         });
-        carousel.addEventListener('mouseleave', () => {
-          isDown = false;
-          carousel.classList.remove('dragging');
+
+        prevButton.addEventListener('click', () => {
+          if (currentTranslateX > 0) {
+            currentTranslateX -= translateStep;
+            if (currentTranslateX < 0) {
+              currentTranslateX = 0;
+            }
+            updateCarousel();
+          }
         });
-        carousel.addEventListener('mouseup', () => {
-          isDown = false;
-          carousel.classList.remove('dragging');
-        });
-        carousel.addEventListener('mousemove', (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - carousel.offsetLeft;
-          const walk = (x - startX) * 2; // scroll-fast
-          carousel.scrollLeft = scrollLeft - walk;
-        });
-      
-        // TOUCH EVENTS
-        carousel.addEventListener('touchstart', (e) => {
-          // only handle single-finger touches
-          if (e.touches.length !== 1) return;
-          isDown = true;
-          carousel.classList.add('dragging');
-          startX = e.touches[0].pageX - carousel.offsetLeft;
-          scrollLeft = carousel.scrollLeft;
-        }, {passive: true});
-      
-        carousel.addEventListener('touchend', () => {
-          isDown = false;
-          carousel.classList.remove('dragging');
-        });
-      
-        carousel.addEventListener('touchmove', (e) => {
-          if (!isDown || e.touches.length !== 1) return;
-          // prevent the page itself from scrolling while dragging the carousel
-          e.preventDefault();
-          const x = e.touches[0].pageX - carousel.offsetLeft;
-          const walk = (x - startX) * 2;
-          carousel.scrollLeft = scrollLeft - walk;
-        }, {passive: false});
+
+        // Initial update
+        updateCarousel();
       </script>
-      
     </div>
   </section>
   <!-- ===== Team Section End ===== -->
@@ -2174,7 +2154,7 @@
       }
     });
   </script>
-  <!-- <script>
+  <script>
 
     const carousel = document.querySelector('.team-carousel');
 
@@ -2206,7 +2186,7 @@
       const walk = (x - startX) * 2; // scroll-fast
       carousel.scrollLeft = scrollLeft - walk;
     });
-  </script> -->
+  </script>
 
 
   <!-- ====== Back To Top Start ===== -->
