@@ -1093,7 +1093,8 @@
         max-width: 100%;
         margin: 0 auto;
         overflow: hidden;
-        touch-action: pan-x;
+        /* Using touch-action to hint to the browser which gestures we're handling */
+        touch-action: pan-y; /* Allows vertical scrolling, but we'll handle pan-x */
       }
 
       .team-carousel {
@@ -1155,15 +1156,18 @@
 </section>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const carouselWrapper = document.querySelector('.team-carousel-wrapper');
     const carousel = document.querySelector('.team-carousel');
     let isDragging = false;
-    let startPos = 0;
+    let startX = 0;
+    let startY = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
     let animationId;
     let currentIndex = 0;
 
     const getPositionX = (event) => event.touches[0].clientX;
+    const getPositionY = (event) => event.touches[0].clientY;
 
     const setSliderPosition = () => {
       carousel.style.transform = `translateX(${currentTranslate}px)`;
@@ -1176,7 +1180,8 @@
 
     const touchStart = (index) => (event) => {
       currentIndex = index;
-      startPos = getPositionX(event);
+      startX = getPositionX(event);
+      startY = getPositionY(event);
       isDragging = true;
       animationId = requestAnimationFrame(animation);
       carousel.classList.add('grabbing');
@@ -1184,8 +1189,26 @@
 
     const touchMove = (event) => {
       if (isDragging) {
-        const currentPosition = getPositionX(event);
-        currentTranslate = prevTranslate + currentPosition - startPos;
+        const currentPositionX = getPositionX(event);
+        const currentPositionY = getPositionY(event);
+
+        const deltaX = currentPositionX - startX;
+        const deltaY = currentPositionY - startY;
+
+        // If the vertical movement is significantly larger than horizontal,
+        // assume the user wants to scroll vertically and don't preventDefault.
+        // You can adjust the threshold (e.g., 10) as needed.
+        if (Math.abs(deltaY) > Math.abs(deltaX) + 10) {
+          isDragging = false; // Stop horizontal dragging
+          cancelAnimationFrame(animationId);
+          carousel.classList.remove('grabbing');
+          return; // Allow native vertical scroll
+        }
+
+        // If it's primarily horizontal, prevent default to avoid vertical scrolling interference
+        // and handle the horizontal swipe.
+        event.preventDefault();
+        currentTranslate = prevTranslate + deltaX;
       }
     };
 
@@ -1199,11 +1222,10 @@
       // Determine the width of a single item dynamically
       const itemWidth = carousel.querySelector('.team-carousel-item').offsetWidth + 30; // 30 for margin
 
+      // Snap logic based on movement
       if (movedBy < -50 && currentIndex < carousel.children.length - 1) {
         currentIndex += 1;
-      }
-
-      if (movedBy > 50 && currentIndex > 0) {
+      } else if (movedBy > 50 && currentIndex > 0) {
         currentIndex -= 1;
       }
 
@@ -1211,14 +1233,13 @@
     };
 
     const setPositionByIndex = () => {
-      // Calculate the correct offset based on the current index and item width
       const itemWidth = carousel.querySelector('.team-carousel-item').offsetWidth;
       const margin = 15; // As defined in your CSS for .team-carousel-item margin
 
-      // Get the current width of the carousel wrapper to determine visible items
-      const carouselWrapperWidth = carousel.parentElement.offsetWidth;
+      const carouselWrapperWidth = carouselWrapper.offsetWidth; // Use wrapper width for visible area
 
       // Calculate how many items can fit in the view
+      // This is a rough estimation, adjust if your item sizes vary greatly or margins are complex
       let itemsInView = Math.floor(carouselWrapperWidth / (itemWidth + margin * 2));
       if (itemsInView === 0) itemsInView = 1; // Ensure at least one item is considered
 
@@ -1232,14 +1253,13 @@
       }
 
       // Calculate the `x` translation for the carousel to show the `currentIndex` item at the start
-      // This calculation needs to account for the total width of items before the current index
       let offset = 0;
       for (let i = 0; i < currentIndex; i++) {
         offset += carousel.children[i].offsetWidth + margin * 2;
       }
 
       currentTranslate = -offset;
-      prevTranslate = currentTranslate;
+      prevTranslate = currentTranslate; // Update prevTranslate here
       setSliderPosition();
     };
 
@@ -1248,16 +1268,16 @@
       // Disable default image drag
       item.querySelector('img').addEventListener('dragstart', (e) => e.preventDefault());
 
-      // Touch events
-      item.addEventListener('touchstart', touchStart(index));
+      // Touch events on the item itself
+      item.addEventListener('touchstart', touchStart(index), { passive: false }); // Use passive: false to allow preventDefault
       item.addEventListener('touchend', touchEnd);
-      item.addEventListener('touchmove', touchMove);
+      item.addEventListener('touchmove', touchMove, { passive: false }); // Use passive: false
     });
 
-    // Mouse events for desktop dragging
+    // Mouse events for desktop dragging on the carousel container
     carousel.addEventListener('mousedown', (e) => {
       isDragging = true;
-      startPos = e.clientX;
+      startX = e.clientX;
       carousel.classList.add('grabbing');
       animationId = requestAnimationFrame(animation);
     });
@@ -1280,9 +1300,8 @@
 
     carousel.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
-      e.preventDefault(); // Prevent text selection and other default behaviors
-      const currentPosition = e.clientX;
-      currentTranslate = prevTranslate + currentPosition - startPos;
+      e.preventDefault(); // Prevent text selection and other default behaviors on horizontal drag
+      currentTranslate = prevTranslate + (e.clientX - startX);
     });
 
     // Recalculate position on window resize
