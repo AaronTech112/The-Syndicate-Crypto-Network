@@ -2091,60 +2091,6 @@
     </div>
   </footer>
   <!-- ===== Footer End  ===== -->
-  <script>
-    window.addEventListener('scroll', () => {
-      const heroContainer = document.querySelector('.hero-image-container');
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-
-      const maxScroll = windowHeight;
-      const scale = 1 + (scrollPosition / maxScroll) * 1.5;
-      const opacity = 1 - scrollPosition / maxScroll;
-
-      const img = heroContainer.querySelector('img');
-      img.style.transform = `scale(${scale})`;
-      img.style.opacity = opacity;
-
-      if (opacity <= 0) {
-        heroContainer.style.display = 'none';
-      } else {
-        heroContainer.style.display = 'flex';
-      }
-    });
-  </script>
-  <script>
-
-    const carousel = document.querySelector('.team-carousel');
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    carousel.addEventListener('mousedown', (e) => {
-      isDown = true;
-      carousel.classList.add('dragging');
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
-
-    carousel.addEventListener('mouseleave', () => {
-      isDown = false;
-      carousel.classList.remove('dragging');
-    });
-
-    carousel.addEventListener('mouseup', () => {
-      isDown = false;
-      carousel.classList.remove('dragging');
-    });
-
-    carousel.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2; // scroll-fast
-      carousel.scrollLeft = scrollLeft - walk;
-    });
-  </script>
 
 
   <!-- ====== Back To Top Start ===== -->
