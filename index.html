@@ -2254,6 +2254,27 @@
   <!-- ====== Back To Top End ===== -->
 
   <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+    window.addEventListener('scroll', () => {
+      const heroContainer = document.querySelector('.hero-image-container');
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      const maxScroll = windowHeight;
+      const scale = 1 + (scrollPosition / maxScroll) * 1.5;
+      const opacity = 1 - scrollPosition / maxScroll;
+
+      const img = heroContainer.querySelector('img');
+      img.style.transform = `scale(${scale})`;
+      img.style.opacity = opacity;
+
+      if (opacity <= 0) {
+        heroContainer.style.display = 'none';
+      } else {
+        heroContainer.style.display = 'flex';
+      }
+    });
+  </script>
   <script>
     // section menu active
     function onScroll(event) {
